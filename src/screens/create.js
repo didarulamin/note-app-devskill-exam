@@ -10,10 +10,14 @@ import * as ImagePicker from "expo-image-picker";
 import useFirebase from "../../firebase/useFirebase";
 import uuid from "react-native-uuid";
 import { LogBox } from "react-native";
+import FlashMessage, {
+  showMessage,
+  hideMessage,
+} from "react-native-flash-message";
 
 const OPTIONS = ["Male", "Female"];
 
-const create = () => {
+const create = ({ navigation }) => {
   LogBox.ignoreLogs(["Setting a timer"]);
 
   const [gender, setGender] = useState(null);
@@ -68,22 +72,12 @@ const create = () => {
   const onSave = () => {
     // setIsLoading(true);
 
-    const selectedDay = [
-      dayState["0"],
-      dayState["1"],
-      dayState["2"],
-      dayState["3"],
-      dayState["4"],
-      dayState["5"],
-      dayState["6"],
-    ];
-
     const employee = {
       employeeId: employeeId,
       name: fullName,
       age: age,
       gender: gender,
-      dayState: selectedDay,
+      dayState: dayState,
       createdBy: user.uid,
       img: imageUrl,
       timestamp: new Date(),
@@ -103,10 +97,14 @@ const create = () => {
       })
       .catch((err) => (err) => {
         console.log(err);
-        // setIsLoading(false);
+
+        showMessage({
+          message: "failed",
+          type: "danger",
+        });
       });
 
-    // navigation.goBack();
+    navigation.goBack();
   };
 
   const pickImage = async () => {

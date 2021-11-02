@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import FlashMessage, {
@@ -40,18 +40,15 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.heading}>Never forget your notes!</Text>
+      <View style={{ alignSelf: "center", margin: 10 }}>
+        <Image source={require("../../assets/login.png")} />
       </View>
 
       <View style={styles.inputContainer}>
+        <Input label="Email" onChangeText={(email) => setEmail(email)}></Input>
         <Input
-          onChangeText={(email) => setEmail(email)}
-          placeholder="email"
-        ></Input>
-        <Input
+          label="Password"
           onChangeText={(pass) => setPassword(pass)}
-          placeholder="password"
           secureTextEntry={true}
         ></Input>
         <Button

@@ -47,34 +47,33 @@ const Home = ({ navigation }) => {
         justifyContent: "space-between",
       }}
     >
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <Image
-          source={{ uri: item.img }}
-          style={{
-            height: 100,
-            width: 100,
-            alignSelf: "flex-start",
-            borderRadius: 50,
-          }}
-        />
-        <View style={{ marginHorizontal: 5 }}>
-          <Text style={{ fontSize: 18, color: "black" }}>{item.name}</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
-              {item.gender}
-            </Text>
-            <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
-              {item.age}
-            </Text>
-          </View>
-          <View>
-            {item.dayState.map((day, index) => (
-             if (day ==="1") {
-              
-              {days[index]} 
-    
-             }
-            ))}
+      <View
+        style={{
+          borderBottomWidth: 2,
+          margin: 2,
+          flex: 1,
+        }}
+      >
+        <View style={{ marginBottom: 5, flexDirection: "row" }}>
+          <Image
+            source={{ uri: item.img }}
+            style={{
+              height: 100,
+              width: 100,
+              alignSelf: "flex-start",
+              borderRadius: 50,
+            }}
+          />
+          <View style={{ marginHorizontal: 5, marginVertical: 5 }}>
+            <Text style={{ fontSize: 18, color: "black" }}>{item.name}</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
+                {item.gender}
+              </Text>
+              <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
+                {item.age}
+              </Text>
+            </View>
           </View>
         </View>
       </View>

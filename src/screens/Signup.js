@@ -5,6 +5,10 @@ import Input from "../components/Input"; */
 import useFirebase from "../../firebase/useFirebase";
 import Button from "../components/Button";
 import Input from "../components/Input";
+import FlashMessage, {
+  showMessage,
+  hideMessage,
+} from "react-native-flash-message";
 
 const OPTIONS = ["Male", "Female"];
 
@@ -12,60 +16,50 @@ const signup = () => {
   //   const [gender, setGender] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [age, setAge] = useState("");
+  const [password_con, setPassword_con] = useState("");
   const { firebase } = useFirebase();
 
+  console.log(password, password_con);
   const handleSignup = () => {
+    if (password_con !== password) {
+      showMessage({
+        message: "Confirm password not match",
+        type: "danger",
+      });
+      return;
+    }
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        const uid = result.user.uid;
-        const userProfile = {
-          id: uid,
-          name: fullName,
-          age: age,
-          email: email,
-          //   gender: gender,
-        };
-
-        result.user
-          .updateProfile({
-            displayName: fullName,
-          })
-          .then(() => {
-            // Update successful
-            // ...
-          })
-          .catch((error) => {
-            // An error occurred
-            // ...
-          });
-
-        const userRef = firebase.firestore().collection("user");
-        userRef.doc(uid).set(userProfile);
+        showMessage({
+          message: "Success",
+          type: "success",
+        });
       })
       .catch((error) => {
         console.log(error);
+        showMessage({
+          message: "failed",
+          type: "danger",
+        });
       });
-
-    // const user = firebase.auth().currentUser;
   };
 
   return (
     <View style={styles.container}>
-      <Input onChangeText={(text) => setEmail(text)} placeholder="Email" />
+      <Input onChangeText={(text) => setEmail(text)} label="Email" />
       <Input
         onChangeText={(text) => setPassword(text)}
-        placeholder="Password"
+        label="Password"
         secureTextEntry={true}
       />
+
       <Input
-        onChangeText={(text) => setFullName(text)}
-        placeholder="Full name"
+        onChangeText={(text) => setPassword_con(text)}
+        label="Confirm Password"
+        secureTextEntry={true}
       />
-      <Input onChangeText={(text) => setAge(text)} placeholder="Age" />
 
       <Button
         onPress={handleSignup}
