@@ -71,13 +71,20 @@ const create = ({ navigation }) => {
 
   const onSave = () => {
     // setIsLoading(true);
+    const selectedDays = [];
+    for (const day in dayState) {
+      const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+      if (dayState[day]) {
+        selectedDays.push(days[day]);
+      }
+    }
 
     const employee = {
       employeeId: employeeId,
       name: fullName,
       age: age,
       gender: gender,
-      dayState: dayState,
+      dayState: selectedDays,
       createdBy: user.uid,
       img: imageUrl,
       timestamp: new Date(),
@@ -179,7 +186,7 @@ const create = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <View style={{ padding: 15 }}>
       <View style={{ alignItems: "center" }}>
         <Text
           style={{
@@ -236,7 +243,7 @@ const create = ({ navigation }) => {
       <Button
         onPress={onSave}
         title="create"
-        customStyles={{ alignSelf: "center" }}
+        customStyles={{ alignSelf: "center", marginTop: 20 }}
       />
     </View>
   );

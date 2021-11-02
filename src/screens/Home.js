@@ -9,10 +9,10 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import useFirebase from "../../firebase/useFirebase";
+import Button from "../components/Button";
 
 const Home = ({ navigation }) => {
   // const [checking, setChecking] = useState(true);
-  const days = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
   const { firebase, user } = useFirebase();
   const [employees, setEmployees] = useState([]);
 
@@ -36,45 +36,60 @@ const Home = ({ navigation }) => {
   // console.log(employees[2].dayState);
 
   const renderItem = ({ item }) => (
-    <View
-      style={{
-        backgroundColor: item.noteColor,
-        borderRadius: 12,
-        padding: 15,
-        margin: 5,
-        marginHorizontal: 15,
-        flexDirection: "row",
-        justifyContent: "space-between",
-      }}
-    >
+    <View style={{ marginBottom: 5, flexDirection: "row", padding: 10 }}>
+      <Image
+        source={{ uri: item.img }}
+        style={{
+          height: 100,
+          width: 100,
+          alignSelf: "flex-start",
+          borderRadius: 50,
+        }}
+      />
       <View
         style={{
-          borderBottomWidth: 2,
-          margin: 2,
           flex: 1,
+          marginHorizontal: 5,
+          marginVertical: 5,
+          borderBottomWidth: 1,
+          padding: 5,
         }}
       >
-        <View style={{ marginBottom: 5, flexDirection: "row" }}>
-          <Image
-            source={{ uri: item.img }}
+        <Text style={{ fontSize: 18, color: "black" }}>{item.name}</Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
+            {item.gender}
+          </Text>
+          <View
             style={{
-              height: 100,
-              width: 100,
-              alignSelf: "flex-start",
-              borderRadius: 50,
+              height: 5,
+              width: 5,
+              borderRadius: 10,
+              backgroundColor: "black",
             }}
-          />
-          <View style={{ marginHorizontal: 5, marginVertical: 5 }}>
-            <Text style={{ fontSize: 18, color: "black" }}>{item.name}</Text>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
-                {item.gender}
-              </Text>
-              <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
-                {item.age}
-              </Text>
+          ></View>
+          <Text style={{ fontSize: 14, color: "black", margin: 5 }}>
+            {item.age}
+          </Text>
+        </View>
+
+        <View style={{ flexDirection: "row" }}>
+          {item.dayState.map((day) => (
+            <View
+              key={day}
+              style={{
+                height: 30,
+                width: 30,
+                borderRadius: 30,
+                backgroundColor: "black",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: 2,
+              }}
+            >
+              <Text style={{ fontSize: 11, color: "white" }}>{day}</Text>
             </View>
-          </View>
+          ))}
         </View>
       </View>
     </View>
@@ -93,14 +108,16 @@ const Home = ({ navigation }) => {
         <Text style={{ fontSize: 24, color: "#188180", fontWeight: "bold" }}>
           My Employees
         </Text>
-        <Pressable style={{ marginTop: 5 }}>
-          <AntDesign
-            onPress={() => navigation.navigate("Create")}
-            name="pluscircle"
-            size={24}
-            color="#188180"
-          />
-        </Pressable>
+        {employees.length === 1 && (
+          <Pressable style={{ marginTop: 5 }}>
+            <AntDesign
+              onPress={() => navigation.navigate("Create")}
+              name="pluscircle"
+              size={24}
+              color="#188180"
+            />
+          </Pressable>
+        )}
       </View>
 
       {employees.length === 0 ? (
@@ -108,7 +125,12 @@ const Home = ({ navigation }) => {
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
           <Image source={require("../../assets/home_empty.png")} />
-          <Text>You don't have any notes</Text>
+          <Text>You don't have any employees</Text>
+          <Button
+            onPress={() => navigation.navigate("Create")}
+            title="Add an employees"
+            customStyles={{ margin: 10 }}
+          />
         </View>
       ) : (
         <FlatList
