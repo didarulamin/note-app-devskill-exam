@@ -9,6 +9,7 @@ import FlashMessage, {
   showMessage,
   hideMessage,
 } from "react-native-flash-message";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const OPTIONS = ["Male", "Female"];
 
@@ -47,26 +48,28 @@ const signup = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Input onChangeText={(text) => setEmail(text)} label="Email" />
-      <Input
-        onChangeText={(text) => setPassword(text)}
-        label="Password"
-        secureTextEntry={true}
-      />
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
+        <Input onChangeText={(text) => setEmail(text)} label="Email" />
+        <Input
+          onChangeText={(text) => setPassword(text)}
+          label="Password"
+          secureTextEntry={true}
+        />
 
-      <Input
-        onChangeText={(text) => setPassword_con(text)}
-        label="Confirm Password"
-        secureTextEntry={true}
-      />
+        <Input
+          onChangeText={(text) => setPassword_con(text)}
+          label="Confirm Password"
+          secureTextEntry={true}
+        />
 
-      <Button
-        onPress={handleSignup}
-        title="Submit"
-        customStyles={{ alignSelf: "center", marginTop: 30 }}
-      />
-    </View>
+        <Button
+          onPress={handleSignup}
+          title="Submit"
+          customStyles={{ alignSelf: "center", marginTop: 30 }}
+        />
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -7,6 +7,7 @@ import FlashMessage, {
   hideMessage,
 } from "react-native-flash-message";
 import useFirebase from "../../firebase/useFirebase";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const Login = ({ navigation }) => {
   const { firebase, setUser } = useFirebase();
@@ -40,30 +41,36 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ alignSelf: "center", margin: 10 }}>
-        <Image source={require("../../assets/login.png")} />
-      </View>
+      <KeyboardAwareScrollView>
+        <View style={{ alignSelf: "center", margin: 10 }}>
+          <Image source={require("../../assets/login.png")} />
+        </View>
 
-      <View style={styles.inputContainer}>
-        <Input label="Email" onChangeText={(email) => setEmail(email)}></Input>
-        <Input
-          label="Password"
-          onChangeText={(pass) => setPassword(pass)}
-          secureTextEntry={true}
-        ></Input>
-        <Button
-          onPress={loginHandler}
-          title="Login"
-          customStyles={{ alignSelf: "center", marginTop: 25 }}
-        />
-      </View>
+        <View style={styles.inputContainer}>
+          <Input
+            label="Email"
+            onChangeText={(email) => setEmail(email)}
+          ></Input>
 
-      <View style={styles.account}>
-        <Text style={{ marginEnd: 5 }}>Don't have account?</Text>
-        <Pressable onPress={() => navigation.navigate("Signup")}>
-          <Text style={{ color: "green" }}>Sign Up</Text>
-        </Pressable>
-      </View>
+          <Input
+            label="Password"
+            onChangeText={(pass) => setPassword(pass)}
+            secureTextEntry={true}
+          ></Input>
+          <Button
+            onPress={loginHandler}
+            title="Login"
+            customStyles={{ alignSelf: "center", marginTop: 25 }}
+          />
+        </View>
+
+        <View style={styles.account}>
+          <Text style={{ marginEnd: 5 }}>Don't have account?</Text>
+          <Pressable onPress={() => navigation.navigate("Signup")}>
+            <Text style={{ color: "green" }}>Sign Up</Text>
+          </Pressable>
+        </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 };

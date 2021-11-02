@@ -10,9 +10,12 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import useFirebase from "../../firebase/useFirebase";
 import Button from "../components/Button";
+import FlashMessage, {
+  showMessage,
+  hideMessage,
+} from "react-native-flash-message";
 
 const Home = ({ navigation }) => {
-  // const [checking, setChecking] = useState(true);
   const { firebase, user } = useFirebase();
   const [employees, setEmployees] = useState([]);
 
@@ -95,6 +98,22 @@ const Home = ({ navigation }) => {
     </View>
   );
 
+  const logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        // Sign-out successful.
+        showMessage({
+          message: "Success",
+          type: "success",
+        });
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View
@@ -108,7 +127,7 @@ const Home = ({ navigation }) => {
         <Text style={{ fontSize: 24, color: "#188180", fontWeight: "bold" }}>
           My Employees
         </Text>
-        {employees.length === 1 && (
+        {employees.length !== 0 && (
           <Pressable style={{ marginTop: 5 }}>
             <AntDesign
               onPress={() => navigation.navigate("Create")}
@@ -139,6 +158,11 @@ const Home = ({ navigation }) => {
           keyExtractor={(item) => item.employeeId}
         />
       )}
+      <Button
+        onPress={logout}
+        title="Logout"
+        customStyles={{ alignSelf: "center", margin: 10 }}
+      />
     </View>
   );
 };

@@ -38,8 +38,7 @@ const create = ({ navigation }) => {
   });
 
   console.log(fullName, age, gender, dayState);
-  // let day = { Mo: 1, Tu: 0, W: 0, Th: 0, F: 0, Sa: 0, Sun: 0 };
-  console.log(image);
+ 
   let days = {
     0: dayState["0"],
     1: dayState["1"],
@@ -54,7 +53,7 @@ const create = ({ navigation }) => {
     setDayState(days);
   };
 
-  console.log(dayState);
+ 
 
   useEffect(() => {
     (async () => {
@@ -233,12 +232,7 @@ const create = ({ navigation }) => {
         ))}
       </View>
 
-      <WeekdayPicker
-        days={days}
-        onChange={handleChange}
-        style={styles.picker}
-        dayStyle={styles.day}
-      />
+      <WeekdayPicker days={days} onChange={handleChange} />
 
       <Button
         onPress={onSave}
@@ -254,12 +248,5 @@ export default create;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  picker: {
-    padding: 30,
-  },
-  day: {
-    margin: 5,
-    backgroundColor: "black",
   },
 });
